@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import {Hero} from "../hero";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {HeroService} from "../hero.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-hero-detail',
@@ -29,7 +30,15 @@ export class HeroDetailComponent {
 
   goBack():void {
     console.log("hello");
+    this.location.back();
+
   }
 
 
+  save(): void {
+    if (this.hero) {
+      this.heroservice.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+    }
+  }
 }
