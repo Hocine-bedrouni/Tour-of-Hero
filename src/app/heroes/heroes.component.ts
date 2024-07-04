@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Hero} from "../hero";
 import {HeroService} from "../hero.service";
 
@@ -16,6 +16,9 @@ export class HeroesComponent implements OnInit {
   public selectedHero?: Hero;
 
   public heroes: Hero[] = [];
+
+  @ViewChild("heroName")
+  public heroName!: ElementRef<HTMLInputElement>;
 
   ngOnInit(): void {
     this.getHeroes()
@@ -44,10 +47,16 @@ export class HeroesComponent implements OnInit {
   };
 
 
+  add(name: string):void {
+    name = name.trim();
+    if(!name) {return;}
+    this.heroService.addHero({name} as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+        console.log(this.heroName.nativeElement.value);
+        // @ts-ignore
+        this.heroName.nativeElement.value="Va chier mec";
+      })
 
-
-
-
-
-
+  }
 }

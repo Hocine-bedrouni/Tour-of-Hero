@@ -35,4 +35,10 @@ export class HeroDetailComponent {
   }
 
 
+  save(): void {
+    if (this.hero) {
+      this.heroservice.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+    }
+  }
 }
