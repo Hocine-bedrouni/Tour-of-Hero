@@ -11,7 +11,8 @@ import {HeroService} from "../hero.service";
 })
 export class HeroesComponent implements OnInit {
 
-  constructor(private heroService: HeroService) {}
+  constructor(private heroService: HeroService) {
+  }
 
   public selectedHero?: Hero;
 
@@ -35,8 +36,6 @@ export class HeroesComponent implements OnInit {
   }
 
 
-
-
   // getHeroes(): void {
   //   this.heroes = this.heroService.getHeroes();
   // }
@@ -47,16 +46,23 @@ export class HeroesComponent implements OnInit {
   };
 
 
-  add(name: string):void {
+  add(name: string): void {
     name = name.trim();
-    if(!name) {return;}
+    if (!name) {
+      return;
+    }
     this.heroService.addHero({name} as Hero)
       .subscribe(hero => {
         this.heroes.push(hero);
         console.log(this.heroName.nativeElement.value);
-        // @ts-ignore
-        this.heroName.nativeElement.value="Va chier mec";
+        this.heroName.nativeElement.value = "ajoute un nouvel hero ici";
       })
+
+  }
+
+  delete(hero: Hero) {
+    this.heroes = this.heroes.filter(h => h !== hero)
+    this.heroService.deleteHero(hero.id).subscribe();
 
   }
 }
